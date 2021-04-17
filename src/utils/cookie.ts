@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import jwt from 'jwt-decode'
 
 const cookies:any = {}
 
@@ -36,7 +37,12 @@ cookies.getAll = function () {
  * @param {String} name cookie name
  */
 cookies.remove = function (name = 'default') {
-  return Cookies.remove(`d2admin-${process.env.VUE_APP_VERSION}-${name}`)
+  return Cookies.remove(`ljw-${name}`)
+}
+
+cookies.verify = function (token='') {
+  const info = jwt(token)
+  return info
 }
 
 export default cookies

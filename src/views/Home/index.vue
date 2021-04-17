@@ -1,42 +1,66 @@
 <template>
-  <h1 class="text">我是首页</h1>
-  vuex:{{ $store.state.num }}
-  <button @click="add">++</button>
-  {{ state.name }}
-  {{ state.num }}
-  <div class="login">
-    <button type="primary" @click="goLogin">跳转登录页</button>
-  </div>
+<el-container class="conClass" :style="containerStyle">
+  <el-header style="width:100%;">
+      <customHeader></customHeader>
+    </el-header>
+  <el-container>
+    <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+      <customMenu></customMenu>
+    </el-aside>
+    <el-main>
+      <router-view></router-view>
+    </el-main>
+  </el-container>
+</el-container>
 </template>
-<script lang="ts" setup="props">
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-const router = useRouter();
-const store = useStore();
-const goLogin = () => {
-  router.push("/login");
-};
-const add = () => {
-  store.commit("addNum");
-  state.num = store.state.num;
-  state.num > 20 ? (state.color = "pink") : (state.color = "#ccc");
-};
+<script lang="ts">
+import {ref, reactive, onMounted, watchEffect } from "vue";
+import customMenu from "./menu/index.vue"
+import customHeader from "./header/index.vue"
+import { useRouter,useRoute } from "vue-router"
+import api from "../../api"
+import cookie from "../../utils/cookie"
 
-const state = reactive({
-  name: "霍庆祝",
-  num: 10,
-  color: "#ccc",
-});
+export default {
+  name:"index",
+  components:{
+    customMenu,
+    customHeader
+  },
+  setup(){
+    const route = useRoute();
+    let domHei = ref(document.documentElement.clientHeight);
+    let containerStyle:any = reactive({
+      height:domHei + 'px',
+    });
+    onMounted(()=>{
+      console.log(route.path);
+      window.onresize = ()=>{
+        domHei =ref(document.documentElement.clientHeight);
+      }
+    });
+
+    return {
+      domHei,
+      containerStyle
+    }
+  },
+}
 </script>
-<style >
-.text {
-  color: v-bind("state.color");
+<style scoped>
+.conClass{
+  border: 1px solid #eee;
+  min-width: 800px;
+  min-height: 600px;
 }
-.login {
-  width: 100%;
-  height: 100px;
-  line-height: 100px;
-  background-color: pink;
-}
+ .el-header {
+    background-color: #B3C0D1;
+    color: #333;
+    line-height: 60px;
+  }
+
+  .el-aside {
+    color: #333;
+  }
+  
 </style>

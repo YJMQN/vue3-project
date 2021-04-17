@@ -1,6 +1,8 @@
 import axios from "axios";
-
-let baseURL = "http://101.200.50.189:3000";
+import cookie from "../utils/cookie";
+import router from "../router"
+import { ElMessage } from 'element-plus'
+let baseURL = "http://127.0.0.1:3001";
 
 const service = axios.create({
     baseURL,
@@ -11,9 +13,9 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
       // 如果有token 就携带tokon
-      const token = sessionStorage.token;
+      const token = cookie.get('token');
       if (token) {
-        config.headers.common.Authorization = token;
+        config.headers.Authorization = token;
       }
       return config;
     },
@@ -22,15 +24,31 @@ service.interceptors.request.use(
   // 响应拦截器
   service.interceptors.response.use(
     response => {
+      console.log(response);
       const res = response.data;
       if (response.status !== 200) {
+        if(response.status ==401){
+          cookie.remove('token')
+          router.push('/login')
+        }
         return Promise.reject(new Error(res.message || "Error"));
       } else {
         return res;
       }
     },
     error => {
-      return Promise.reject(error);
+      if(error.response.status ==401){
+        ElMessage({
+          message:"会话失效，请重新登录",
+          type: 'error',
+          onClose:()=>{
+            cookie.remove('token')
+            router.push('/login')
+          }
+        });
+      }else{
+        return Promise.reject(error);
+      }
     }
   );
   export default service;

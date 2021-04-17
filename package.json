@@ -7,10 +7,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@types/crypto-js": "^4.0.1",
     "@types/js-cookie": "^2.2.6",
     "axios": "^0.21.1",
+    "crypto-js": "^4.0.0",
     "element-plus": "^1.0.2-beta.36",
     "js-cookie": "^2.2.1",
+    "jwt-decode": "^3.1.2",
     "lib-flexible": "^0.3.2",
     "vue": "^3.0.5",
     "vue-router": "^4.0.1",
