@@ -2,7 +2,7 @@ import axios from "axios";
 import cookie from "../utils/cookie";
 import router from "../router"
 import { ElMessage } from 'element-plus'
-let baseURL = "http://127.0.0.1:3001";
+let baseURL = "http://8.140.132.99:3001";
 
 const service = axios.create({
     baseURL,
@@ -24,7 +24,6 @@ service.interceptors.request.use(
   // 响应拦截器
   service.interceptors.response.use(
     response => {
-      console.log(response);
       const res = response.data;
       if (response.status !== 200) {
         if(response.status ==401){

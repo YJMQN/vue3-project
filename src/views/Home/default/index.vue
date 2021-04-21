@@ -1,55 +1,30 @@
 <template>
-  <span>欢迎来到后台管理系统</span>
+  	<span>欢迎来到后台管理系统</span>
+	<div>
+		<span>系统可用内存：{{memory}}</span>
+	</div>
 </template>
 <script lang="ts">
 import { ref, defineComponent } from "vue";
-import { useRouter } from "vue-router";
 import api from "../api";
-import cookie from "../../../utils/cookie";
 
 export default defineComponent({
-  name: "customHeader",
+  name: "default",
   data() {
     return {
-      userName: ref(""),
-      input2: ref(""),
-      router: useRouter(),
-      fileList:[]
-    };
+		memory:ref('')
+	};
   },
   methods: {
-    getuserInfo() {
-      let info = cookie.get("userInfo");
-      let data = cookie.verify(info);
-      this.userName = data.name;
-      console.log(data);
+    getConfig() {
+      api.getConfig({}, (res: any) => {
+        console.log(res);
+		this.memory=res.data.totalmem
+      });
     },
-    handleRemove(file:any, fileList:any) {
-        console.log(file, fileList);
-      },
-      handlePreview(file:any) {
-        console.log(file);
-      },
-      handleExceed(files:any, fileList:any) {
-        console.log(files)
-      },
-      beforeRemove(file:any, fileList:any) {
-        console.log(file)
-      },
-      uploadFile(params:any){
-        let fromData = new FormData()
-        fromData.append("file", params.file)
-        console.log(params);
-        api.uploadFile(fromData,(res:any)=>{
-          console.log(res);
-        })
-      },
-      button(){
-        api.test1({},(res:any)=>{
-          console.log(res)
-        })
-      },
   },
-  mounted() {},
+  mounted() {
+    this.getConfig();
+  },
 });
 </script>

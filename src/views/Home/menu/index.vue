@@ -38,7 +38,7 @@ export default {
     }
     onMounted(() => {
       childRoutes.forEach((item)=>{
-        console.log(item);
+        
       })
     });
     watchEffect(() => {
