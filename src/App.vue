@@ -6,18 +6,18 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'App',
-  components: {
+    name: 'App',
+    components: {
     
-  }
+    }
 })
 </script>
 
 <style>
-body{
-  margin: 0px;
-}
-::-webkit-scrollbar {  
+    body{
+        margin: 0px;
+    }
+    ::-webkit-scrollbar {  
         width: 5px;  /*滚动条宽度*/
         height: 5px  /*滚动条高度*/
     }  

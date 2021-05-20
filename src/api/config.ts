@@ -2,7 +2,8 @@ import axios from "axios";
 import cookie from "../utils/cookie";
 import router from "../router"
 import { ElMessage } from 'element-plus'
-let baseURL = "http://8.140.132.99:3001";
+import setting from '../config/setting'
+const baseURL = setting.baseUrl;
 
 const service = axios.create({
     baseURL,

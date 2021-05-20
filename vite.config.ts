@@ -10,12 +10,4 @@ export default defineConfig({
     '@/component': resolve(__dirname, 'src/views/Component'),
     '@/home': resolve(__dirname, 'src/views/Home'),
 	},
-  server:{
-    proxy:{
-      '/api':{
-        target:'http://127.0.0.1:3001/api',
-        changeOrigin:true
-      },
-    },
-  }
 })

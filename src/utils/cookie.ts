@@ -10,9 +10,12 @@ const cookies:any = {}
  * @param {Object} setting cookie setting
  */
 cookies.set = function (name = 'default', value = '', cookieSetting = {}) {
+  // const currentCookieSetting = {
+  //   expires: 1
+  // }//过期时间为1天的cookie
   const currentCookieSetting = {
-    expires: 1
-  }
+    
+  }//会话型cookie，关闭浏览器即被删除
   Object.assign(currentCookieSetting, cookieSetting)
   Cookies.set(`ljw-${name}`, value, currentCookieSetting)
 }
